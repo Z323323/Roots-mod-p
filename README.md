@@ -44,4 +44,26 @@ This means that $7$ is a **quadratic nonresidue** modulo $79$.
 
 ## Calculating any root modulo a prime number
 
-Euler's Criterion generates confusion in general. When we use it, we are not finding any root. We just know if the number itself [for ex. $7$ we considered previously] is the square root (if it is a **quadratic residue**) of **something** or if it is not the square root of something. But we don't know what **"something"** is, and in general, we don't know if it could be some greater root of something else. 
+Euler's Criterion generates confusion in general. When we use it, we are not finding any root. We just know if the number itself [for ex. $7$ we considered previously] is the square root (if it is a **quadratic residue**) of **something** or if it is not the square root of something. But we don't know what **"something"** is, and in general, we don't know if it could be some greater root of something else. Recalling the fact we are always operating on some **generator** $g$, then, we'll always handle something like $g^{y} \mod p$ when doing operations modulo $p$. Now, the exponents are part of $Z_{p - 1}^{+}$. This means that if we want to find the $n-th$ root of $g^{y} \mod p$, we just need to find
+
+```math
+y \equiv z \mod (p - 1)
+```
+
+and some $x$ such that
+
+```math
+((g^{z})^{n})^{x} = g^{znx} \equiv g^{z} \mod p
+```
+
+This last equation means that $x$ must be the multiplicative inverse of $n$, and, in that case, our $n-th$ root will be
+
+```
+g^{x} = g^{n^{- 1}} \equiv g^{z}_{\_}nth_{\_}root \mod p
+```
+
+This restrict the problem to find $n^{- 1} \mod (p - 1)$ which is solvable using the extendend Euclidean Algorithm iff $gcd(n, p - 1) = 1$, otherwise we'll need some other trick. This another reason why extension fields are so powerful (we can find $p - 1$ prime, where $p$ is not prime, but we can't do this $mod p$ where $p$ is prime).
+
+```math
+
+```
