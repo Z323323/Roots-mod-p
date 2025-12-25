@@ -1,4 +1,4 @@
-# Roots modulo p(rime)
+# Some concepts regarding roots in multiplicative groups
 
 ## Quadratic residues and nonresidues
 
