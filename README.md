@@ -41,3 +41,7 @@ Recalling $7 \mod 79$, then, if $7^{(79 - 1) / 2} \equiv 1 \mod 79$ then $7$ is 
 ```
 
 This means that $7$ is a **quadratic nonresidue** modulo $79$.
+
+## Calculating any root modulo a prime number
+
+Euler's Criterion generates confusion in general. When we use it, we are not finding any root. We just know if the number itself [for ex. $7$ we considered previously] is the square root (if it is a **quadratic residue**) of **something** or if it is not the square root of something. But we don't know what **"something"** is, and in general, we don't know if it could be some greater root of something else. 
