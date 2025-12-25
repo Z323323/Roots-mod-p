@@ -17,8 +17,8 @@ a^{(p - 1) / 2} = (g^{(2m + 1)})^{(p - 1) / 2} = g^{[2m(p - 1) / 2] + [(p - 1) /
 Now $g^{p - 1}$ is the square of $g^{(p - 1) / 2}$. This means that $g^{(p - 1) / 2}$ is either $1$ or $- 1$, but since the order of $g \mod p$ is $p - 1$, then $g^{(p - 1) / 2} \equiv - 1 \mod p$ **and** $a^{(p - 1) / 2} \equiv - 1 \mod p$. This means that if $k$ is **odd**, that is, **$a$ is a quadratic non residue** then
 
 ```math
-a^{(p - 1) / 2} \equiv - 1 \equiv p - 1 \mod p \iff a_{_}is_{_}a_{_}quadratic_{_}nonresidue
+a^{(p - 1) / 2} \equiv - 1 \equiv p - 1 \mod p \iff a_{\_}is_{\_}a_{\_}quadratic_{\_}nonresidue
 ```
 
-> To better understand this last conclusion, note that the only element of order $2$ (modulo a prime odd number) is **always** $- 1$, that is $p - 1$. Indeed there are always $\phi(\phi(p) / [ \phi(p) / 2 ]) = 1$ subgroups of order $2$ [if the group has generators].
+> To better understand this last conclusion, note that the only element of order $2$ (modulo a prime odd number) is **always** $- 1$, that is $p - 1$. Indeed there are always $\phi(2) = 1$ subgroups of order $2$ [if the group has generators].
 
