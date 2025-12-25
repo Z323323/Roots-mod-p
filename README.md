@@ -44,7 +44,12 @@ This means that $7$ is a **quadratic nonresidue** modulo $79$.
 
 ## Calculating any root modulo a prime number
 
-Euler's Criterion generates confusion in general. When we use it, we are not finding any root. We just know if the number itself [for ex. $7$ we considered previously] is the square root (if it is a **quadratic residue**) of **something** or if it is not the square root of something. But we don't know what **"something"** is, and in general, we don't know if it could be some greater root of something else. Recalling the fact we are always operating on some **generator** $g$, then, we'll always handle something like $g^{y} \mod p$ when doing operations modulo $p$. Now, the exponents are part of $Z_{p - 1}^{+}$. This means that if we want to find the $n-th$ root of $g^{y} \mod p$, we just need to find
+Euler's Criterion generates confusion in general. When we use it, we are not finding any root. We just know if the number itself [for ex. $7$ we considered previously] is the square root (if it is a **quadratic residue**) of **something** or if it is not the square root of something. But we don't know what **"something"** is, and in general, we don't know if it could be some greater root of something else. Recalling the fact we are always operating on some **generator** $g$, then, we'll always handle something like $g^{y} \mod p$ when doing operations modulo $p$. This means that if we need to find some $n-th$ root of $g^{y}$ we could immediately perform $g^{y / n}$. Now, what if $n \nmid y$ ? In those cases, we can simply state that particular root does not exist inside $Z_{p}^{\ast}$. Indeed, if you look at the previous sections, if $k$ is not even, that is, is not a multiple of $2$ **hence is not divisible by $2$, then it cannot be a quadratic residue**.
+
+> Consider now this scenario. We want to find the actual $n-th$ root of some value modulo $p$ without having obtained it as some power of some generator $g$. This is a huge problem. In general, for the square root we should consider Tonelli-Shanks algorithm along with other arcane algorithms, but note that **if we can avoid those, then we SHOULD**. For ex. consider this example. We want to find a generator modulo $17$. If you run the following algorithm you'll see that $7$ is a generator. In this case $17 - 1 = 16$. Now, imagine we want to know the square root of $11$. We immediately know that $7^{5} \equiv 11 \mod 17$, and since $2 \nmid 5$ then $11$ can't be a quadratic residue. Indeed $11^{16 / 2 = 8} \equiv 16 \equiv - 1 \mod 17$.
+
+
+Now, the exponents are part of $Z_{p - 1}^{+}$. This means that if we want to find the $n-th$ root of $g^{y} \mod p$, we just need to find
 
 ```math
 y \equiv z \mod (p - 1)
@@ -58,11 +63,11 @@ and some $x$ such that
 
 This last equation means that $x$ must be the multiplicative inverse of $n$, and, in that case, our $n-th$ root will be
 
-```
+```math
 g^{x} = g^{n^{- 1}} \equiv g^{z}_{\_}nth_{\_}root \mod p
 ```
 
-This restrict the problem to find $n^{- 1} \mod (p - 1)$ which is solvable using the extendend Euclidean Algorithm iff $gcd(n, p - 1) = 1$, otherwise we'll need some other trick. This another reason why extension fields are so powerful (we can find $p - 1$ prime, where $p$ is not prime, but we can't do this $mod p$ where $p$ is prime).
+This restrict the problem to find $n^{- 1} \mod (p - 1)$ which is solvable using the extendend Euclidean Algorithm iff $gcd(n, p - 1) = 1$, otherwise we'll need some other trick. This another reason why extension fields are so powerful (we can find $p - 1$ prime, where $p$ is **not** prime, but we can't do this $mod p$ where $p$ is prime).
 
 ```math
 
