@@ -172,7 +172,7 @@ y \equiv z \mod p
 and some $x$ such that
 
 ```math
-((g(x)^{z})^{n})^{x} = g(x)^{znx} \equiv g^{z} \mod I(x)
+((g(x)^{z})^{n})^{x} = g(x)^{znx} \equiv g(x)^{z} \mod I(x)
 ```
 
 This last equation means that $x$ **must be the multiplicative inverse of $n$**, and, in that case, our $n-th$ root will be
