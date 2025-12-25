@@ -1,1 +1,4 @@
-# Roots-mod-p
+# Roots modulo p(rime)
+
+## Euler's Criterion
+
