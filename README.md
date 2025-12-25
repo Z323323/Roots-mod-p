@@ -48,27 +48,137 @@ Euler's Criterion generates confusion in general. When we use it, we are not fin
 
 > Consider now this scenario. We want to find the actual $n-th$ root of some value modulo $p$ without having obtained it as some power of some generator $g$. This is a huge problem. In general, for the square root we should consider Tonelli-Shanks algorithm along with other arcane algorithms, but note that **if we can avoid those, then we SHOULD**. For ex. consider this example. We want to find a generator modulo $17$. If you run the following algorithm you'll see that $7$ is a generator. In this case $17 - 1 = 16$. Now, imagine we want to know the square root of $11$. We immediately know that $7^{5} \equiv 11 \mod 17$, and since $2 \nmid 5$ then $11$ can't be a quadratic residue. Indeed $11^{16 / 2 = 8} \equiv 16 \equiv - 1 \mod 17$.
 
+```shell
+[14ms][~]$ python3 ZZ.py            
+Enter integer number to see every multiplicative subgroup:
+17
 
-Now, the exponents are part of $Z_{p - 1}^{+}$. This means that if we want to find the $n-th$ root of $g^{y} \mod p$, we just need to find
+Printing results using n as modulo and stopping at Phi(n)...
+
+ 1 ->[ 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 [ 1 ] ]
+
+ 2 ->[ 2 4 8 16 15 13 9 1 2 4 8 16 15 13 9 [ 1 ] ]
+
+ 3 ->[ 3 9 10 13 5 15 11 16 14 8 7 4 12 2 6 [ 1 ] ]
+
+ 4 ->[ 4 16 13 1 4 16 13 1 4 16 13 1 4 16 13 [ 1 ] ]
+
+ 5 ->[ 5 8 6 13 14 2 10 16 12 9 11 4 3 15 7 [ 1 ] ]
+
+ 6 ->[ 6 2 12 4 7 8 14 16 11 15 5 13 10 9 3 [ 1 ] ]
+
+ 7 ->[ 7 15 3 4 11 9 12 16 10 2 14 13 6 8 5 [ 1 ] ]
+
+ 8 ->[ 8 13 2 16 9 4 15 1 8 13 2 16 9 4 15 [ 1 ] ]
+
+ 9 ->[ 9 13 15 16 8 4 2 1 9 13 15 16 8 4 2 [ 1 ] ]
+
+ 10 ->[ 10 15 14 4 6 9 5 16 7 2 3 13 11 8 12 [ 1 ] ]
+
+ 11 ->[ 11 2 5 4 10 8 3 16 6 15 12 13 7 9 14 [ 1 ] ]
+
+ 12 ->[ 12 8 11 13 3 2 7 16 5 9 6 4 14 15 10 [ 1 ] ]
+
+ 13 ->[ 13 16 4 1 13 16 4 1 13 16 4 1 13 16 4 [ 1 ] ]
+
+ 14 ->[ 14 9 7 13 12 15 6 16 3 8 10 4 5 2 11 [ 1 ] ]
+
+ 15 ->[ 15 4 9 16 2 13 8 1 15 4 9 16 2 13 8 [ 1 ] ]
+
+ 16 ->[ 16 1 16 1 16 1 16 1 16 1 16 1 16 1 16 [ 1 ] ]
+
+Factors: [[17, 1]]
+Every co-factor of Phi: [16]
+Multiplied co-factors phis: 16
+Phi factors: [[2, 4]]
+Every Phi s co-factors Phi: [[2, 4]]
+Multiplied Phi s co-factors phis: 8
+Resume: Phi(n) =  16 , Phi(Phi(n)) =  8
+```
+
+The code used was the following.
+
+```python
+import sys
+
+def factorize(n):
+	factors = []
+	c = 0
+	exp = 0
+	i = 2
+	while i <= n:
+		while n%i == 0:
+			n/=i
+			exp+=1
+		if exp > 0:
+			factors.append([i, exp])
+			exp=0
+		i+=1
+	return factors
+	
+def phiExpansion(factors):
+	phis = []
+	z = 1
+	for factor in factors:
+		z *= (factor[0]**factor[1] - factor[0]**(factor[1]-1))
+		phis.append(z)
+		z = 1
+	return phis
+	
+def synthPhi(phisFactors):
+	synthPhi = 1
+	for phis in phisFactors:
+		synthPhi *= phis
+	return synthPhi
+	
+Zn = int(input("Enter integer number to see every multiplicative subgroup:\n"))
+Factors = factorize(Zn)
+
+PhiExp = phiExpansion(Factors)
+Phi = synthPhi(PhiExp)
+
+FPhi = factorize(Phi)
+FPhiExp = phiExpansion(FPhi)
+PhiPhi = synthPhi(FPhiExp)
+
+print("\nPrinting results using n as modulo and stopping at Phi(n)...")
+
+for j in range(1, Zn):
+	print("\n", j, "->[", end = " ")
+	for i in range(1, Phi + 1):
+		if(i == Phi):
+			print("[", j**i % Zn, "]", end = " ")
+		else:
+			print(j**i % Zn, end = " ")
+	print("]")
+	
+print("\nFactors:", Factors)
+print("Every co-factor of Phi:", PhiExp)
+print("Multiplied co-factors phis:", Phi)
+print("Phi factors:", FPhi)
+print("Every Phi s co-factors Phi:", FPhi)
+print("Multiplied Phi s co-factors phis:", PhiPhi)
+print("Resume: Phi(n) = ", Phi, ", Phi(Phi(n)) = ", PhiPhi)
+```
+
+## Calculating ANY root FAST in some Galois field extension where the order of the multiplicative group is prime
+
+If we want to find the $n-th$ root of $g(x)^{y} \mod I(x)$, (**where $I(x)$ is irreducible and it has degree $d$ such that $d - 1 = p$ is a Mersenne prime number**) we just need to find
 
 ```math
-y \equiv z \mod (p - 1)
+y \equiv z \mod p
 ```
 
 and some $x$ such that
 
 ```math
-((g^{z})^{n})^{x} = g^{znx} \equiv g^{z} \mod p
+((g(x)^{z})^{n})^{x} = g(x)^{znx} \equiv g^{z} \mod I(x)
 ```
 
-This last equation means that $x$ must be the multiplicative inverse of $n$, and, in that case, our $n-th$ root will be
+This last equation means that $x$ **must be the multiplicative inverse of $n$**, and, in that case, our $n-th$ root will be
 
 ```math
-g^{x} = g^{n^{- 1}} \equiv g^{z}_{\_}nth_{\_}root \mod p
+g(x)^{x} = g(x)^{n^{- 1}} \equiv g(x)^{z}_{\_}nth_{\_}root \mod I(x)
 ```
 
-This restrict the problem to find $n^{- 1} \mod (p - 1)$ which is solvable using the extendend Euclidean Algorithm iff $gcd(n, p - 1) = 1$, otherwise we'll need some other trick. This another reason why extension fields are so powerful (we can find $p - 1$ prime, where $p$ is **not** prime, but we can't do this $mod p$ where $p$ is prime).
-
-```math
-
-```
+This restrict the problem to find $n^{- 1} \mod p$ which is solvable using the extendend Euclidean Algorithm iff $gcd(n, d - 1) = 1$ (otherwise we'll fall into the previous problems $\mod p$ on the integers). This is another reason why extension fields are so powerful (we can find $d - 1 = p$ prime, where $d$ is **not** prime, but we can't do this $\mod p$ where $p$ is prime on the integers).
