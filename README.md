@@ -22,3 +22,14 @@ a^{(p - 1) / 2} \equiv - 1 \equiv p - 1 \mod p \iff a_{\_}is_{\_}a_{\_}quadratic
 
 > To better understand this last conclusion, note that the only element of order $2$ (modulo a prime odd number) is **always** $- 1$, that is $p - 1$. Indeed there are always $\phi(2) = 1$ subgroups of order $2$ [if the group has generators].
 
+Now, if $k$ is **even**, then $g^{k} \equiv a \mod p$ is a **quadratic residue**, and
+
+```math
+a^{(p - 1) / 2} = (g^{2m})^{(p - 1) / 2} = g^{2m(p - 1) / 2} = g^{m(p - 1)} \equiv 1 \mod p
+```
+
+This basically means that
+
+```math
+a^{(p - 1) / 2} \equiv 1 \mod p \iff a_{\_}is_{\_}a_{\_}quadratic_{\_}residue
+```
