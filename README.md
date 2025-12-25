@@ -33,3 +33,11 @@ This basically means that
 ```math
 a^{(p - 1) / 2} \equiv 1 \mod p \iff a_{\_}is_{\_}a_{\_}quadratic_{\_}residue
 ```
+
+Recalling $7 \mod 79$, then, if $7^{(79 - 1) / 2} \equiv 1 \mod 79$ then $7$ is a **quadratic residue**. Otherwise, if $7^{(79 - 1) / 2} \equiv - 1 \equiv 78 \mod 79$ then $7$ is a **quadratic nonresidue**.
+
+```math
+7^{(79 - 1) / 2} = 7^{39} \equiv 78 \mod 79
+```
+
+This means that $7$ is a **quadratic nonresidue** modulo $79$.
