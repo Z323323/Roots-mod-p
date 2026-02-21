@@ -161,7 +161,7 @@ print("Multiplied Phi s co-factors phis:", PhiPhi)
 print("Resume: Phi(n) = ", Phi, ", Phi(Phi(n)) = ", PhiPhi)
 ```
 
-## Calculating ANY root FAST in some Galois field extension where the order of the multiplicative group is prime
+## Calculating ANY root quickly in some Galois field extension where the order of the multiplicative group is prime
 
 If we want to find the $n-th$ root of $g(x)^{y} \mod I(x)$, (**where $I(x)$ is irreducible and it has degree $d$ such that $d - 1 = p$ is a Mersenne prime number**) we just need to find
 
@@ -169,16 +169,16 @@ If we want to find the $n-th$ root of $g(x)^{y} \mod I(x)$, (**where $I(x)$ is i
 y \equiv z \mod p
 ```
 
-and some $x$ such that
+and some $w$ such that
 
 ```math
-((g(x)^{z})^{n})^{x} = g(x)^{znx} \equiv g(x)^{z} \mod I(x)
+((g(x)^{z})^{n})^{w} = g(x)^{znw} \equiv g(x)^{z} \mod I(x)
 ```
 
-This last equation means that $x$ **must be the multiplicative inverse of $n$**, and, in that case, our $n-th$ root will be
+This last equation means that $w$ **must be the multiplicative inverse of $n$**, and, in that case, our $n-th$ root will be
 
 ```math
-g(x)^{x} = g(x)^{n^{- 1}} \equiv g(x)^{z}_{\_}nth_{\_}root \mod I(x)
+g(x)^{w} = g(x)^{n^{- 1} \mod p} \equiv g(x)^{z}\text{\_nth\_root} \mod I(x)
 ```
 
-This restrict the problem to find $n^{- 1} \mod p$ which is solvable using the extendend Euclidean Algorithm iff $gcd(n, d - 1) = 1$ (otherwise we'll fall into the previous problems $\mod p$ on the integers). This is another reason why extension fields are so powerful (we can find $d - 1 = p$ prime, where $d$ is **not** prime, but we can't do this $\mod p$ where $p$ is prime on the integers).
+This restrict the problem to find $n^{- 1} \mod p$ which is solvable using the Extendend Euclidean Algorithm.
