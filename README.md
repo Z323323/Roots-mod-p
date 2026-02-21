@@ -46,7 +46,7 @@ This means that $7$ is a **quadratic nonresidue** modulo $79$.
 
 Euler's Criterion generates confusion in general. When we use it, we are not finding any root. We just know if the number itself [for ex. $7$ we considered previously] is the square (if it is a **quadratic residue**) of **something** or if it is not the square of something. But we don't know what **"something"** is, and in general, we don't know if it could be some greater (than 2) power of something else. Recalling the fact we are always operating on some **generator** $g$, then, we'll always handle something like $g^{y} \mod p$ when doing operations modulo $p$. This means that if we need to find some $n-th$ root of $g^{y}$ we could immediately perform $g^{y / n}$. Now, what if $n \nmid y$ ? In those cases, we can simply state that particular root does not exist inside $Z_{p}^{\ast}$. Indeed, if you look at the previous sections, if $k$ is not even, that is, is not a multiple of $2$ **hence is not divisible by $2$, then it cannot be a quadratic residue**.
 
-> Consider now this scenario. We want to find the actual $n-th$ root of some value modulo $p$ without having obtained it as some power of some generator $g$. This is a huge problem. In general, for the square root we should consider Tonelli-Shanks algorithm along with other arcane algorithms, but note that **if we can avoid those, then we SHOULD**. For ex. consider this example. We want to find a generator modulo $17$. If you run the following algorithm you'll see that $7$ is a generator. In this case $17 - 1 = 16$. Now, imagine we want to know the square root of $11$. We immediately know that $7^{5} \equiv 11 \mod 17$, and since $2 \nmid 5$ then $11$ can't be a quadratic residue. Indeed $11^{16 / 2 = 8} \equiv 16 \equiv - 1 \mod 17$. In the same way we know that $7$ is the $5-th$ root of $11$ modulo $17$. As long as we handle exponents everything turns out to be easier. We don't even actually always need to know what some $g^{y}$ equivs. But we always need to find some $g$.
+> Consider now this scenario. We want to find the actual $n-th$ root of some value modulo $p$ without having obtained it as some power of some generator $g$. This is a huge problem. In general, for the square root we should consider Tonelli-Shanks algorithm along with other arcane algorithms, but note that **if we can avoid those, then we SHOULD**. For ex. consider this example. We want to find a generator modulo $17$. If you run the following algorithm you'll see that $7$ is a generator. In this case $\phi(17) = 17 - 1 = 16$. Now, imagine we want to know the square root of $11$. We immediately know that $7^{5} \equiv 11 \mod 17$, and since $2 \nmid 5$ then $11$ can't be a quadratic residue. Indeed $11^{16 / 2 = 8} \equiv 16 \equiv - 1 \mod 17$. In the same way we know that $7$ is the $5-th$ root of $11$ modulo $17$. As long as we handle exponents everything turns out to be easier. We don't even actually always need to know what some $g^{y}$ equivs to. **But we always need to find some $g$**.
 
 ```shell
 [14ms][~]$ python3 ZZ.py            
@@ -163,13 +163,15 @@ print("Resume: Phi(n) = ", Phi, ", Phi(Phi(n)) = ", PhiPhi)
 
 ## Calculating ANY root quickly in some Galois field extension where the order of the multiplicative group is prime
 
-If we want to find the $n-th$ root of $g(x)^{y} \mod I(x)$, (**where $I(x)$ is irreducible and it has degree $d$ such that $d - 1 = p$ is a Mersenne prime number**) we just need to find
+Galois Fields are particular. For example, using integers we will never end up having some $g^{y} \mod p$ where $y$ is cyclic by a prime order, because $\phi(p)$ **is almost never a prime number**. This is different in Galois Fields because the order of a multiplicative group defined modulo an irreducible polinomial $I(x)$ (and a prime number $p$) is equal to $p^{deg(I(x))} - 1$. This means that if $deg(I(x))$ is some fair prime number and $p = 2$, we'll have $p^{deg(I(x))} - 1 = p^{k} - 1$ being a Mersenne prime number $M$. This means that in this case, **any $n-th$ root of any $g(x)^{y} \mod I(x)$ will exist and will be computable as follows.**
+
+### Method 1
 
 ```math
-y \equiv z \mod p
+y \equiv z \mod M
 ```
 
-and some $w$ such that
+We'll need some $w$ such that
 
 ```math
 ((g(x)^{z})^{n})^{w} = g(x)^{znw} \equiv g(x)^{z} \mod I(x)
@@ -178,7 +180,16 @@ and some $w$ such that
 This last equation means that $w$ **must be the multiplicative inverse of $n$**, and, in that case, our $n-th$ root will be
 
 ```math
-g(x)^{w} = g(x)^{n^{- 1} \mod p} \equiv g(x)^{z}\text{\_nth\_root} \mod I(x)
+g(x)^{zw} = g(x)^{z(n^{- 1} \mod M)} \mod I(x)
 ```
 
-This restrict the problem to find $n^{- 1} \mod p$ which is solvable using the Extendend Euclidean Algorithm.
+This restrict the problem to find $n^{- 1} \mod M$ which is solvable using the Extendend Euclidean Algorithm.
+
+### Method 2
+
+We can just compute
+
+```math
+g(x)^{y / n} \mod I(x)
+```
+
