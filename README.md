@@ -42,124 +42,9 @@ Recalling $7 \mod 79$, then, if $7^{(79 - 1) / 2} \equiv 1 \mod 79$ then $7$ is 
 
 This means that $7$ is a **quadratic nonresidue** modulo $79$.
 
-## Calculating any root modulo a prime number
+## Stating the existence of any root immediately and calculating it quickly modulo a prime number
 
-Euler's Criterion generates confusion in general. When we use it, we are not finding any root. We just know if the number itself [for ex. $7$ we considered previously] is the square (if it is a **quadratic residue**) of **something** or if it is not the square of something. But we don't know what **"something"** is, and in general, we don't know if it could be some greater (than 2) power of something else. Recalling the fact we are always operating on some **generator** $g$, then, we'll always handle something like $g^{y} \mod p$ when doing operations modulo $p$. This means that if we need to find some $n-th$ root of $g^{y}$ we could immediately perform $g^{y / n}$. Now, what if $n \nmid y$ ? In those cases, we can simply state that particular root does not exist inside $Z_{p}^{\ast}$. Indeed, if you look at the previous sections, if $k$ is not even, that is, is not a multiple of $2$ **hence is not divisible by $2$, then it cannot be a quadratic residue**.
-
-> Consider now this scenario. We want to find the actual $n-th$ root of some value modulo $p$ without having obtained it as some power of some generator $g$. This is a huge problem. In general, for the square root we should consider Tonelli-Shanks algorithm along with other arcane algorithms, but note that **if we can avoid those, then we SHOULD**. For ex. consider this example. We want to find a generator modulo $17$. If you run the following algorithm you'll see that $7$ is a generator. In this case $\phi(17) = 17 - 1 = 16$. Now, imagine we want to know the square root of $11$. We immediately know that $7^{5} \equiv 11 \mod 17$, and since $2 \nmid 5$ then $11$ can't be a quadratic residue. Indeed $11^{16 / 2 = 8} \equiv 16 \equiv - 1 \mod 17$. In the same way we know that $7$ is the $5-th$ root of $11$ modulo $17$. As long as we handle exponents everything turns out to be easier. We don't even actually always need to know what some $g^{y}$ equivs to. **But we always need to find some $g$**.
-
-```shell
-[14ms][~]$ python3 ZZ.py            
-Enter integer number to see every multiplicative subgroup:
-17
-
-Printing results using n as modulo and stopping at Phi(n)...
-
- 1 ->[ 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 [ 1 ] ]
-
- 2 ->[ 2 4 8 16 15 13 9 1 2 4 8 16 15 13 9 [ 1 ] ]
-
- 3 ->[ 3 9 10 13 5 15 11 16 14 8 7 4 12 2 6 [ 1 ] ]
-
- 4 ->[ 4 16 13 1 4 16 13 1 4 16 13 1 4 16 13 [ 1 ] ]
-
- 5 ->[ 5 8 6 13 14 2 10 16 12 9 11 4 3 15 7 [ 1 ] ]
-
- 6 ->[ 6 2 12 4 7 8 14 16 11 15 5 13 10 9 3 [ 1 ] ]
-
- 7 ->[ 7 15 3 4 11 9 12 16 10 2 14 13 6 8 5 [ 1 ] ]
-
- 8 ->[ 8 13 2 16 9 4 15 1 8 13 2 16 9 4 15 [ 1 ] ]
-
- 9 ->[ 9 13 15 16 8 4 2 1 9 13 15 16 8 4 2 [ 1 ] ]
-
- 10 ->[ 10 15 14 4 6 9 5 16 7 2 3 13 11 8 12 [ 1 ] ]
-
- 11 ->[ 11 2 5 4 10 8 3 16 6 15 12 13 7 9 14 [ 1 ] ]
-
- 12 ->[ 12 8 11 13 3 2 7 16 5 9 6 4 14 15 10 [ 1 ] ]
-
- 13 ->[ 13 16 4 1 13 16 4 1 13 16 4 1 13 16 4 [ 1 ] ]
-
- 14 ->[ 14 9 7 13 12 15 6 16 3 8 10 4 5 2 11 [ 1 ] ]
-
- 15 ->[ 15 4 9 16 2 13 8 1 15 4 9 16 2 13 8 [ 1 ] ]
-
- 16 ->[ 16 1 16 1 16 1 16 1 16 1 16 1 16 1 16 [ 1 ] ]
-
-Factors: [[17, 1]]
-Every co-factor of Phi: [16]
-Multiplied co-factors phis: 16
-Phi factors: [[2, 4]]
-Every Phi s co-factors Phi: [[2, 4]]
-Multiplied Phi s co-factors phis: 8
-Resume: Phi(n) =  16 , Phi(Phi(n)) =  8
-```
-
-The code used was the following.
-
-```python
-import sys
-
-def factorize(n):
-	factors = []
-	c = 0
-	exp = 0
-	i = 2
-	while i <= n:
-		while n%i == 0:
-			n/=i
-			exp+=1
-		if exp > 0:
-			factors.append([i, exp])
-			exp=0
-		i+=1
-	return factors
-	
-def phiExpansion(factors):
-	phis = []
-	z = 1
-	for factor in factors:
-		z *= (factor[0]**factor[1] - factor[0]**(factor[1]-1))
-		phis.append(z)
-		z = 1
-	return phis
-	
-def synthPhi(phisFactors):
-	synthPhi = 1
-	for phis in phisFactors:
-		synthPhi *= phis
-	return synthPhi
-	
-Zn = int(input("Enter integer number to see every multiplicative subgroup:\n"))
-Factors = factorize(Zn)
-
-PhiExp = phiExpansion(Factors)
-Phi = synthPhi(PhiExp)
-
-FPhi = factorize(Phi)
-FPhiExp = phiExpansion(FPhi)
-PhiPhi = synthPhi(FPhiExp)
-
-print("\nPrinting results using n as modulo and stopping at Phi(n)...")
-
-for j in range(1, Zn):
-	print("\n", j, "->[", end = " ")
-	for i in range(1, Phi + 1):
-		if(i == Phi):
-			print("[", j**i % Zn, "]", end = " ")
-		else:
-			print(j**i % Zn, end = " ")
-	print("]")
-	
-print("\nFactors:", Factors)
-print("Every co-factor of Phi:", PhiExp)
-print("Multiplied co-factors phis:", Phi)
-print("Phi factors:", FPhi)
-print("Every Phi s co-factors Phi:", FPhi)
-print("Multiplied Phi s co-factors phis:", PhiPhi)
-print("Resume: Phi(n) = ", Phi, ", Phi(Phi(n)) = ", PhiPhi)
-```
+Euler's Criterion generates confusion in general. When we use it, we are not finding any root. We just know if the number itself [for ex. $7$ we considered previously] is the square (if it is a **quadratic residue**) of **something** or if it is not the square of something. But we don't know what **"something"** is, and in general, we don't know if it could be some greater (than 2) power of something else. Recalling the fact we are always operating on some **generator** $g$, then, we'll always handle something like $g^{y} \mod p$ when doing operations modulo $p$. This means that if we need to find some $n-th$ root of $g^{y}$ we could immediately perform $g^{y / n = y \cdot (n^{- 1} \mod \phi(p))}$. Now, $n^{- 1} \mod \phi(p)$ exists if and only if $gcd(n, \phi(p)) = 1$, because $1$ is an element of $Z_{\phi(p)}^{\star}$ and if $n$ is not coprime with $\phi(p)$ then whatever we multiply by $n$ will never be part of $Z_{\phi(p)}^{\star}$ (there's a simple theorem proving this). This means that there exist many cases where our root doesn't exist and it's not even hard to state it or to find those, we will just need to apply the Extended Euclidean Algorithm and check the result. If $gcd(n, \phi(p)) \neq 1$ then the root doesn't even exist. If it equals $1$ then the $n - th$ root is $g^{y(n^{- 1} \mod \phi(p)} \mod p$ because $(g^{y(n^{- 1} \mod \phi(p))})^{n} = g^{y(n^{- 1} \mod \phi(p))n} = g^{y} \mod p$.
 
 ## Calculating ANY root quickly in some Galois field extension where the order of the multiplicative group is prime
 
@@ -190,6 +75,6 @@ This restrict the problem to find $n^{- 1} \mod M$ which is solvable using the E
 We can just compute
 
 ```math
-g(x)^{y / n} \mod I(x)
+g(x)^{z / n = z \cdot (n^{- 1} \mod M) = zw} \mod I(x)
 ```
 
