@@ -56,35 +56,14 @@ Now, **$n^{- 1} \mod \phi(p)$ exists if and only if $gcd(n, \phi(p)) = 1$, becau
 (g^{y \cdot n^{- 1} \mod \phi(p)})^{n} = g^{y \cdot n^{- 1} \cdot n \mod \phi(p)} = g^{y} \mod p
 ```
 
-## Calculating ANY root quickly in some Galois field extension where the order of the multiplicative group is prime
+## Calculating any root quickly in some Galois field extension where the order of the multiplicative group is prime
 
 Galois Fields are particular. For example, using integers we will never end up having some $g^{y} \mod p$ where $y$ is cyclic by a prime order, because $\phi(p)$ **is almost never a prime number**. This is different in Galois Fields because the order of a multiplicative group defined modulo an irreducible polinomial $I(x)$ (and a prime number $p$) is equal to $p^{deg(I(x))} - 1$. This means that if $deg(I(x))$ is some fair prime number and $p = 2$, we'll have $p^{deg(I(x))} - 1 = p^{k} - 1$ being a Mersenne prime number $M$. This means that in this case, **any $n-th$ root of any $g(x)^{y} \mod I(x)$ will exist and will be computable as follows.**
 
-### Method 1
+As we did previously we'll just need to find $n^{- 1} \mod M$ such that
 
 ```math
-y \equiv z \mod M
+(g(x)^{y \cdot n^{- 1} \mod M})^{n} \equiv g(x)^{y \cdot n^{- 1} \cdot n \mod M} \equiv g(x)^{y} \mod I(x) (\mod p)
 ```
 
-We'll need some $w$ such that
-
-```math
-((g(x)^{z})^{n})^{w} = g(x)^{znw} \equiv g(x)^{z} \mod I(x)
-```
-
-This last equation means that $w$ **must be the multiplicative inverse of $n$**, and, in that case, our $n-th$ root will be
-
-```math
-g(x)^{zw} = g(x)^{z(n^{- 1} \mod M)} \mod I(x)
-```
-
-This restrict the problem to find $n^{- 1} \mod M$ which is solvable using the Extendend Euclidean Algorithm.
-
-### Method 2
-
-We can just compute
-
-```math
-g(x)^{z / n = z \cdot (n^{- 1} \mod M) = zw} \mod I(x)
-```
-
+and $gcd(n, M) = 1$ always because $M$ is a prime number (and $n < M$, or $n = M$ and $gcd(M, M) = M$ but $g(x)^{M} \equiv 1 \mod I(x) (\mod p)$ is the trivial case.
