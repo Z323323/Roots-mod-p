@@ -47,13 +47,13 @@ This means that $7$ is a **quadratic nonresidue** modulo $79$.
 Euler's Criterion generates confusion in general. When we use it, we are not finding any root. We just know if the number itself [for ex. $7$ we considered previously] is the square (if it is a **quadratic residue**) of **something** or if it is not the square of something. But we don't know what **"something"** is, and in general, we don't know if it could be some greater (than 2) power of something else. Recalling the fact we are always operating on some **generator** $g$, then, we'll always handle something like $g^{y} \mod p$ when doing operations modulo $p$. This means that if we need to find some $n-th$ root of $g^{y}$ we could immediately perform
 
 ```math
-g^{y / n \equiv y \cdot (n^{- 1} \mod \phi(p))} \mod p
+g^{y / n \equiv y \cdot n^{- 1} \mod \phi(p)} \mod p
 ```
 
-Now, **$n^{- 1} \mod \phi(p)$ exists if and only if $gcd(n, \phi(p)) = 1$, because $1$ is an element of $Z_{\phi(p)}^{\star}$ and if $n$ is not coprime with $\phi(p)$ then whatever we multiply by $n$ will never be part of $Z_{\phi(p)}^{\star}$ (there's a simple theorem proving this)**. This means that there exist many cases where our root doesn't exist and it's not even hard to state it or to find those, we will just need to apply **(1)** the Euclidean Algorithm, and after that [ if $gcd(n, \phi(p)) = 1$ ], **(2)** the Extended Euclidean Algorithm and check the result. If $gcd(n, \phi(p)) \neq 1$ then the root doesn't even exist. If it equals $1$ then the $n - th$ root is $g^{y(n^{- 1} \mod \phi(p))} \mod p$ because
+Now, **$n^{- 1} \mod \phi(p)$ exists if and only if $gcd(n, \phi(p)) = 1$, because $1$ is an element of $Z_{\phi(p)}^{\star}$ and if $n$ is not coprime with $\phi(p)$ then whatever we multiply by $n$ will never be part of $Z_{\phi(p)}^{\star}$ (there's a simple theorem proving this)**. This means that there exist many cases where our root doesn't exist and it's not even hard to state it or to find those, we will just need to apply **(1)** the Euclidean Algorithm, and after that [ if $gcd(n, \phi(p)) = 1$ ], **(2)** the Extended Euclidean Algorithm and check the result. If $gcd(n, \phi(p)) \neq 1$ then the root doesn't even exist. If it equals $1$ then the $n - th$ root is $g^{y \cdot n^{- 1} \mod \phi(p)} \mod p$ because
 
 ```math
-(g^{y(n^{- 1} \mod \phi(p))})^{n} = g^{y(n^{- 1} \mod \phi(p))n} = g^{y} \mod p
+(g^{y \cdot n^{- 1} \mod \phi(p)})^{n} = g^{y \cdot n^{- 1} \cdot n \mod \phi(p)} = g^{y} \mod p
 ```
 
 ## Calculating ANY root quickly in some Galois field extension where the order of the multiplicative group is prime
