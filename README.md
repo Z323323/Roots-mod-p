@@ -50,7 +50,11 @@ Euler's Criterion generates confusion in general. When we use it, we are not fin
 g^{y / n \equiv y \cdot (n^{- 1} \mod \phi(p))} \mod p
 ```
 
-Now, **$n^{- 1} \mod \phi(p)$ exists if and only if $gcd(n, \phi(p)) = 1$, because $1$ is an element of $Z_{\phi(p)}^{\star}$ and if $n$ is not coprime with $\phi(p)$ then whatever we multiply by $n$ will never be part of $Z_{\phi(p)}^{\star}$ (there's a simple theorem proving this)**. This means that there exist many cases where our root doesn't exist and it's not even hard to state it or to find those, we will just need to apply **(1)** the Euclidean Algorithm, and after that [ if $gcd(n, \phi(p)) = 1$ ], **(2)** the Extended Euclidean Algorithm and check the result. If $gcd(n, \phi(p)) \neq 1$ then the root doesn't even exist. If it equals $1$ then the $n - th$ root is $g^{y(n^{- 1} \mod \phi(p)} \mod p$ because $(g^{y(n^{- 1} \mod \phi(p))})^{n} = g^{y(n^{- 1} \mod \phi(p))n} = g^{y} \mod p$.
+Now, **$n^{- 1} \mod \phi(p)$ exists if and only if $gcd(n, \phi(p)) = 1$, because $1$ is an element of $Z_{\phi(p)}^{\star}$ and if $n$ is not coprime with $\phi(p)$ then whatever we multiply by $n$ will never be part of $Z_{\phi(p)}^{\star}$ (there's a simple theorem proving this)**. This means that there exist many cases where our root doesn't exist and it's not even hard to state it or to find those, we will just need to apply **(1)** the Euclidean Algorithm, and after that [ if $gcd(n, \phi(p)) = 1$ ], **(2)** the Extended Euclidean Algorithm and check the result. If $gcd(n, \phi(p)) \neq 1$ then the root doesn't even exist. If it equals $1$ then the $n - th$ root is $g^{y(n^{- 1} \mod \phi(p))} \mod p$ because
+
+```math
+(g^{y(n^{- 1} \mod \phi(p))})^{n} = g^{y(n^{- 1} \mod \phi(p))n} = g^{y} \mod p
+```
 
 ## Calculating ANY root quickly in some Galois field extension where the order of the multiplicative group is prime
 
