@@ -66,4 +66,4 @@ As we did previously we'll just need to find $n^{- 1} \mod M$ such that
 (g(x)^{y \cdot n^{- 1} \mod M})^{n} \equiv g(x)^{y \cdot n^{- 1} \cdot n \mod M} \equiv g(x)^{y} \mod I(x) (\mod p)
 ```
 
-and $gcd(n, M) = 1$ always because $M$ is a prime number (and $n < M$, or $n = M$ and $gcd(M, M) = M$ but $g(x)^{M} \equiv 1 \mod I(x) (\mod p)$ is the trivial case.
+and $gcd(n, M) = 1$ always because $M$ is a prime number (and $n < M$).
