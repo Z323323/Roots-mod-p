@@ -2,7 +2,7 @@
 
 ## Quadratic residues and nonresidues
 
-Let $p$ an odd prime and $g$ a generator for $Z_{p}^{\ast}$. $(g^{m})^{2} = g^{2m} \equiv a \mod p$ maps all the exponents which are multiples of $2$ inside $\\{ 1, 2, \dots, p - 1 \\}$, and therefore $(p - 1) / 2$ values [half of $Z_{p}^{\ast}$ values]. These values $(a)$ are called **quadratic residues**. All other values are called **quadratic nonresidues**.
+Let $p$ an odd prime and $g$ a generator for $Z_{p}^{\star}$. $(g^{m})^{2} = g^{2m} \equiv a \mod p$ maps all the exponents which are multiples of $2$ inside $\\{ 1, 2, \dots, p - 1 \\}$, and therefore $(p - 1) / 2$ values [half of $Z_{p}^{\star}$ values]. These values $(a)$ are called **quadratic residues**. All other values are called **quadratic nonresidues**.
 
 ## Euler's Criterion
 
@@ -58,7 +58,7 @@ Now, **$n^{- 1} \mod \phi(p)$ exists if and only if $gcd(n, \phi(p)) = 1$, becau
 
 ## Calculating any root quickly in some Galois field extension where the order of the multiplicative group is prime
 
-Galois Fields are particular. For example, using integers we will never end up having some $g^{y} \mod p$ where $y$ is cyclic by a prime order, because $\phi(p)$ **is almost never a prime number**. This is different in Galois Fields because the order of a multiplicative group defined modulo an irreducible polinomial $I(x)$ (and a prime number $p$) is equal to $p^{deg(I(x))} - 1$. This means that if $deg(I(x))$ is some fair prime number and $p = 2$, we'll have $p^{deg(I(x))} - 1 = p^{k} - 1$ being a Mersenne prime number $M$. This means that in this case, **any $n-th$ root of any $g(x)^{y} \mod I(x)$ will exist and will be computable as follows.**
+Galois Fields are particular. For example, using integers we will never end up having some $g^{y} \mod p$ where $y$ is cyclic by a prime order, because $\phi(p)$ **is almost never a prime number**. This is different in Galois Fields because the order of a multiplicative group defined modulo an irreducible polinomial $I(x)$ (and a prime number $p$) is equal to $p^{\text{deg}(I(x))} - 1$. This means that if $\text{deg}(I(x))$ is some fair prime number and $p = 2$, we'll have $p^{\text{deg}(I(x))} - 1 = p^{k} - 1$ being a Mersenne prime number $M$. This means that in this case, **any $n-th$ root of any $g(x)^{y} \mod I(x)$ will exist and will be computable as follows.**
 
 As we did previously we'll just need to find $n^{- 1} \mod M$ such that
 
